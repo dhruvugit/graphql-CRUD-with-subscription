@@ -1,0 +1,47 @@
+type Customer {
+    id: ID!
+    name: String!
+    contactDetails: String!
+    orders: [Order!]
+}
+
+type Order {
+    id: ID!
+    orderNumber: String!
+    status: String!
+    customer: Customer!
+    products: [Product!]
+}
+
+type Product {
+    id: ID!
+    productName: String!
+    description: String!
+    price: Int!
+}
+
+
+type Query {
+    getCustomerById(id: ID!): Customer
+    fetchOrderDetailsByCustomerId(customerId: ID!): [Order!]
+    fetchOrderDetailsByOrderId(orderId: ID!): Order
+    fetchProductDetailsById(productId: ID!): Product
+    fetchAllCustomers: [Customer!]
+    fetchAllProductDetails : [Product]
+
+}
+
+type Mutation {
+    createCustomer(name: String!, contactDetails: String!): Customer
+    createOrder(customerId: ID!, orderNumber: String!, status: String!, productIds: [ID!]!): Order
+    createNewProductEntry(productName: String!, description: String!, price: Int!): Product
+    updateCustomerContactDetails(id: ID!, contactDetails: String!): Customer
+    deleteMultipleProducts(productIds: [ID!]!): Boolean
+    deleteCustomer(id: ID!): Boolean
+    deleteProduct(id: ID!): Boolean
+
+}
+
+type Subscription {
+    newProductAdded: Product
+}
